@@ -120,11 +120,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _navigate(String matricula, String acceso) {
-    Navigator.push(
+    Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) => MainMenuPage(matricula: matricula, acceso: acceso),
-        ));
+        )
+        , (e) => false);
   }
 
   Future<void> _showDialogUnkownUser() async {

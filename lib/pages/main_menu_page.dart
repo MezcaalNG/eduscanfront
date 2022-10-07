@@ -1,3 +1,4 @@
+import 'package:eduscan/pages/scanner_page.dart';
 import 'package:flutter/material.dart';
 
 
@@ -62,7 +63,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
           return ElevatedButton(
               onPressed: (){
                 setState(() {
-
+                  _navigate();
                 });
               },
               child: Container(
@@ -112,7 +113,13 @@ class _MainMenuPageState extends State<MainMenuPage> {
     );
   }
 
-
+  void _navigate() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ScannerPage(matricula: widget.matricula, acceso: widget.acceso),
+        ));
+  }
 
 
 }
