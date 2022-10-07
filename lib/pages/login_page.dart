@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
 import '../api/api_service.dart';
 import '../api/models/loginResponseModel.dart';
+import 'main_menu_page.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -115,6 +112,47 @@ class _LoginPageState extends State<LoginPage> {
   void _doLogin(String email, String pswd) async {
     LoginResponse _loginResponse = (await ApiService().postLogin(email,pswd))!;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    if(_loginResponse.mensaje=="NOK"){
+      _showDialogUnkownUser();
+    }else{
+      _navigate(_loginResponse.matricula,_loginResponse.acceso);
+    }
+  }
+
+  void _navigate(String matricula, String acceso) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MainMenuPage(matricula: matricula, acceso: acceso),
+        ));
+  }
+
+  Future<void> _showDialogUnkownUser() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Error al iniciar sesion'),
+                Text('Favor de verificar usuario y contraseña'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Aceptar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
 }
