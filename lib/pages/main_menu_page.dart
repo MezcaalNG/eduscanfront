@@ -1,15 +1,12 @@
+import 'package:eduscan/pages/registrar_usuario_page.dart';
 import 'package:eduscan/pages/scanner_page.dart';
 import 'package:flutter/material.dart';
 
-
 class MainMenuPage extends StatefulWidget {
-
   static String id = 'main_menu_page';
-
-  String matricula,acceso;
-  MainMenuPage({Key? key,required this.matricula,required this.acceso}) : super(key: key);
-
-
+  final String matricula, acceso;
+  const MainMenuPage({Key? key, required this.matricula, required this.acceso})
+      : super(key: key);
   @override
   State<MainMenuPage> createState() => _MainMenuPageState();
 }
@@ -28,12 +25,18 @@ class _MainMenuPageState extends State<MainMenuPage> {
             children: [
               //SizedBox(height: 15.0,),
               _cardDatosUsuario(),
-              SizedBox(height: 15.0,),
-              _buttonLogin("Registrar Usuario"),
-              SizedBox(height: 15.0,),
-              _buttonLogin("Registrar Alumno"),
-              SizedBox(height: 15.0,),
-              _buttonLogin("Escanear Codigo"),
+              const SizedBox(
+                height: 15.0,
+              ),
+              _button("Registrar Usuario", _navigateRegistroUsuario),
+              const SizedBox(
+                height: 15.0,
+              ),
+              _button("Registrar Alumno", _navigateRegistroAlumno),
+              const SizedBox(
+                height: 15.0,
+              ),
+              _button("Escanear Codigo", _navigateScanner),
             ],
           ),
         ),
@@ -41,44 +44,21 @@ class _MainMenuPageState extends State<MainMenuPage> {
     );
   }
 
-  Widget _textMatricula(){
+  Widget _button(String text, void Function() onPressAction) {
     return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot){
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              'texto1',
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          );
-        },
-    );
-  }
-
-  Widget _buttonLogin(String text) {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot){
-          return ElevatedButton(
-              onPressed: (){
-                setState(() {
-                  _navigate();
-                });
-              },
-              child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-                  child: Text(text)
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+      return ElevatedButton(
+          onPressed: () => onPressAction,
+          style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
               ),
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  elevation: 10.0
-              )
-          );
-        }
-    );
+              elevation: 10.0),
+          child: Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+              child: Text(text)));
+    });
   }
 
   Widget _cardDatosUsuario() {
@@ -113,13 +93,30 @@ class _MainMenuPageState extends State<MainMenuPage> {
     );
   }
 
-  void _navigate() {
+  void _navigateScanner() {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ScannerPage(matricula: widget.matricula, acceso: widget.acceso),
+          builder: (context) =>
+              ScannerPage(matricula: widget.matricula, acceso: widget.acceso),
         ));
   }
 
+  void _navigateRegistroUsuario() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              RegistrarUsuarioPage(matricula: widget.matricula, acceso: widget.acceso),
+        ));
+  }
 
+  void _navigateRegistroAlumno() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              ScannerPage(matricula: widget.matricula, acceso: widget.acceso),
+        ));
+  }
 }

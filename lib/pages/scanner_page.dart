@@ -1,21 +1,18 @@
 import 'package:eduscan/pages/main_menu_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scan/scan.dart';
 
-
 class ScannerPage extends StatefulWidget {
-
   static String id = 'scanner_page';
-  String matricula,acceso;
-  ScannerPage({Key? key,required this.matricula,required this.acceso}) : super(key: key);
+  final String matricula, acceso;
+  const ScannerPage({Key? key, required this.matricula, required this.acceso})
+      : super(key: key);
   @override
   State<ScannerPage> createState() => _ScannerPagePageState();
 }
 
 class _ScannerPagePageState extends State<ScannerPage> {
   @override
-
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -24,8 +21,10 @@ class _ScannerPagePageState extends State<ScannerPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
-                child: Image.asset('images/logo.png',
-                  height: 200.0,),
+                child: Image.asset(
+                  'images/logo.png',
+                  height: 200.0,
+                ),
               ),
               _scannerView()
             ],
@@ -37,10 +36,9 @@ class _ScannerPagePageState extends State<ScannerPage> {
 
   Widget _scannerView() {
     ScanController controller = ScanController();
-    String qrcode = 'Unknown';
     return StreamBuilder(
-      builder: (BuildContext context, AsyncSnapshot snapshot){
-        return Container(
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return SizedBox(
           width: 250, // custom wrap size
           height: 250,
           child: ScanView(
@@ -66,8 +64,8 @@ class _ScannerPagePageState extends State<ScannerPage> {
           title: const Text('QR'),
           content: SingleChildScrollView(
             child: ListBody(
-              children:  <Widget>[
-                Text('QR detectado'),
+              children: <Widget>[
+                const Text('QR detectado'),
                 Text(data),
               ],
             ),
@@ -78,12 +76,13 @@ class _ScannerPagePageState extends State<ScannerPage> {
               onPressed: () {
                 Navigator.of(context).pop();
 
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MainMenuPage(matricula: widget.matricula, acceso: widget.acceso),
-                      )
-                      , (e) => false);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MainMenuPage(
+                          matricula: widget.matricula, acceso: widget.acceso),
+                    ),
+                    (e) => false);
               },
             ),
           ],
@@ -91,5 +90,4 @@ class _ScannerPagePageState extends State<ScannerPage> {
       },
     );
   }
-
 }
