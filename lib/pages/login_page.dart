@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../api/api_service.dart';
-import '../api/models/loginResponseModel.dart';
+import '../api/models/login_response_model.dart';
 import 'main_menu_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void _doLogin(String email, String pswd) async {
     LoginResponse loginResponse = (await ApiService().postLogin(email, pswd))!;
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    //Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
     if (loginResponse.mensaje == "NOK") {
       _showDialogUnkownUser();
     } else {

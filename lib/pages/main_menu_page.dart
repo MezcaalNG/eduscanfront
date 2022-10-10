@@ -48,7 +48,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
     return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return ElevatedButton(
-          onPressed: () => onPressAction,
+          onPressed: () => onPressAction(),
           style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25),
