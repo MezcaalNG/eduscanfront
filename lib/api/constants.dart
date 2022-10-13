@@ -3,4 +3,5 @@ class ApiConstants {
   //static String baseUrl = 'http://localhost:2812';
   static String loginEndPoint = '/login';
   static String registrarUsuarioEndPoint = '/addUser';
+  static String registrarAlumnoEndPoint = '/addAlumno';
 }

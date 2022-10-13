@@ -160,7 +160,7 @@ class _RegistrarUsuarioPageState extends State<RegistrarUsuarioPage> {
     String pswd=pswdController.text;
     String pswdConf=pswdConfController.text;
     String rol=holderDrop.toString();
-    RegistrarUsuarioResponse registrarUsuarioResponse = (await ApiService().postRegistrar(matricula,email,pswd,rol))!;
+    RegistrarUsuarioResponse registrarUsuarioResponse = (await ApiService().postRegistrarUsuario(matricula,email,pswd,rol))!;
     //Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
     if (registrarUsuarioResponse.returnCode != 1&&
         registrarUsuarioResponse.sqlMessage.isNotEmpty) {

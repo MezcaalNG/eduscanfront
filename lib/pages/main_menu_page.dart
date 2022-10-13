@@ -1,3 +1,4 @@
+import 'package:eduscan/pages/registrar_alumno_page.dart';
 import 'package:eduscan/pages/registrar_usuario_page.dart';
 import 'package:eduscan/pages/scanner_page.dart';
 import 'package:flutter/material.dart';
@@ -116,7 +117,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              ScannerPage(matricula: widget.matricula, acceso: widget.acceso),
+              RegistrarAlumnoPage(matricula: widget.matricula, acceso: widget.acceso),
         ));
   }
 }
