@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import '../api/api_service.dart';
-import '../api/models/loginResponseModel.dart';
+import '../api/models/login_response_model.dart';
 import 'main_menu_page.dart';
-
 
 class LoginPage extends StatefulWidget {
   static String id = 'login_page';
-
+  const LoginPage({super.key});
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -24,14 +23,22 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
-                child: Image.asset('images/logo.png',
-                  height: 200.0,),
+                child: Image.asset(
+                  'images/logo.png',
+                  height: 200.0,
+                ),
               ),
-              SizedBox(height: 15.0,),
+              const SizedBox(
+                height: 15.0,
+              ),
               _userTextField(),
-              SizedBox(height: 15.0,),
+              const SizedBox(
+                height: 15.0,
+              ),
               _passwordTextField(),
-              SizedBox(height: 15.0,),
+              const SizedBox(
+                height: 15.0,
+              ),
               _buttonLogin(),
             ],
           ),
@@ -42,20 +49,18 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _userTextField() {
     return StreamBuilder(
-      builder: (BuildContext context, AsyncSnapshot snapshot){
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: TextField(
             keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               icon: Icon(Icons.email),
               hintText: 'ejemplo@correo.com',
               labelText: 'Correo Electronico',
             ),
             controller: emailController,
-            onChanged: (value){
-
-            },
+            onChanged: (value) {},
           ),
         );
       },
@@ -64,21 +69,19 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _passwordTextField() {
     return StreamBuilder(
-      builder: (BuildContext context, AsyncSnapshot snapshot){
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: TextField(
             keyboardType: TextInputType.text,
             obscureText: true,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               icon: Icon(Icons.password),
               hintText: 'Contraseña',
               labelText: 'Contraseña',
             ),
             controller: pswdController,
-            onChanged: (value){
-
-            },
+            onChanged: (value) {},
           ),
         );
       },
@@ -87,44 +90,43 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buttonLogin() {
     return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot){
-          return ElevatedButton(
-              onPressed: (){
-                setState(() {
-                  _doLogin(emailController.text,pswdController.text);
-                });
-              },
-              child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-                  child: Text('Iniciar Sesion')
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+      return ElevatedButton(
+          onPressed: () {
+            setState(() {
+              _doLogin(emailController.text, pswdController.text);
+            });
+          },
+          style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
               ),
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  elevation: 10.0
-              )
-          );
-        }
-    );
+              elevation: 10.0),
+          child: Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+              child: const Text('Iniciar Sesion')));
+    });
   }
 
   void _doLogin(String email, String pswd) async {
-    LoginResponse _loginResponse = (await ApiService().postLogin(email,pswd))!;
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-    if(_loginResponse.mensaje=="NOK"){
+    LoginResponse loginResponse = (await ApiService().postLogin(email, pswd))!;
+    //Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    if (loginResponse.mensaje == "NOK") {
       _showDialogUnkownUser();
-    }else{
-      _navigate(_loginResponse.matricula,_loginResponse.acceso);
+    } else {
+      _navigate(loginResponse.matricula, loginResponse.acceso);
     }
   }
 
   void _navigate(String matricula, String acceso) {
-    Navigator.push(
+    Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => MainMenuPage(matricula: matricula, acceso: acceso),
-        ));
+          builder: (context) =>
+              MainMenuPage(matricula: matricula, acceso: acceso),
+        ),
+        (e) => false);
   }
 
   Future<void> _showDialogUnkownUser() async {
@@ -154,5 +156,4 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
-
 }
