@@ -1,4 +1,6 @@
+import 'package:eduscan/api/models/session_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../api/api_service.dart';
 import '../api/models/login_response_model.dart';
 import 'main_menu_page.dart';
@@ -110,21 +112,23 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _doLogin(String email, String pswd) async {
+    var session = context.read<SessionModel>();
     LoginResponse loginResponse = (await ApiService().postLogin(email, pswd))!;
     //Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
     if (loginResponse.mensaje == "NOK") {
       _showDialogUnkownUser();
     } else {
-      _navigate(loginResponse.matricula, loginResponse.acceso);
+      session.set(loginResponse.matricula, loginResponse.acceso);
+      _navigate();
     }
   }
 
-  void _navigate(String matricula, String acceso) {
+  void _navigate() {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) =>
-              MainMenuPage(matricula: matricula, acceso: acceso),
+              const MainMenuPage(),
         ),
         (e) => false);
   }

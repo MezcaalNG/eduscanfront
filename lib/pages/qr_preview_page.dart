@@ -4,8 +4,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 class QrPreviewPage extends StatefulWidget {
   static String id = 'qr_preview_page';
-  final String matricula, acceso, matriculaAlumno;
-  const QrPreviewPage({Key? key, required this.matricula, required this.acceso, required this.matriculaAlumno})
+  final String matriculaAlumno;
+  const QrPreviewPage({Key? key, required this.matriculaAlumno})
       : super(key: key);
   @override
   State<QrPreviewPage> createState() => _QrPreviewPageState();
@@ -59,7 +59,7 @@ class _QrPreviewPageState extends State<QrPreviewPage> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              MainMenuPage(matricula: widget.matricula, acceso: widget.acceso),
+              const MainMenuPage(),
         ));
   }
 }

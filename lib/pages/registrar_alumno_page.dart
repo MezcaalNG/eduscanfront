@@ -9,8 +9,7 @@ import 'main_menu_page.dart';
 
 class RegistrarAlumnoPage extends StatefulWidget {
   static String id = 'registrar_alumno_page';
-  final String matricula, acceso;
-  const RegistrarAlumnoPage({Key? key, required this.matricula, required this.acceso}) : super(key: key);
+  const RegistrarAlumnoPage({Key? key}) : super(key: key);
   @override
   State<RegistrarAlumnoPage> createState() => _RegistrarAlumnoPageState();
 }
@@ -265,8 +264,7 @@ class _RegistrarAlumnoPageState extends State<RegistrarAlumnoPage> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => QrPreviewPage(
-                          matricula: widget.matricula, acceso: widget.acceso, matriculaAlumno: matriculaAlumno,),
+                      builder: (context) => QrPreviewPage(matriculaAlumno: matriculaAlumno,),
                     ),
                         (e) => false);
               },

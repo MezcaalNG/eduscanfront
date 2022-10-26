@@ -91,4 +91,24 @@ class ApiService {
     return null;
   }
 
+  Future<RegistrarAlumnoRequest?> postConsultaAlumno(String matricula) async {
+    try {
+      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.consultarAlumnoEndPoint);
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'matricula': matricula
+          })
+      );
+      if (response.statusCode == 200) {
+        RegistrarAlumnoRequest responseConsulta = registrarAlumnoRequestFromJson(response.body);
+        return responseConsulta;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
 }

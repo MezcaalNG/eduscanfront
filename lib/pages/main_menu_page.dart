@@ -1,12 +1,13 @@
+import 'package:eduscan/api/models/session_model.dart';
 import 'package:eduscan/pages/registrar_alumno_page.dart';
 import 'package:eduscan/pages/registrar_usuario_page.dart';
 import 'package:eduscan/pages/scanner_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MainMenuPage extends StatefulWidget {
   static String id = 'main_menu_page';
-  final String matricula, acceso;
-  const MainMenuPage({Key? key, required this.matricula, required this.acceso})
+  const MainMenuPage({Key? key})
       : super(key: key);
   @override
   State<MainMenuPage> createState() => _MainMenuPageState();
@@ -73,7 +74,11 @@ class _MainMenuPageState extends State<MainMenuPage> {
                 'Bienvenido:',
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
-              subtitle: Text(widget.matricula),
+              subtitle: Consumer<SessionModel>(
+                builder: (context, session, child) {
+                  return Text(session.matriculaSesion);
+                },
+              ),
               leading: Icon(
                 Icons.account_circle,
                 color: Colors.blue[500],
@@ -82,7 +87,11 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Ultimo Acceso'),
-              subtitle: Text(widget.acceso),
+              subtitle: Consumer<SessionModel>(
+                builder: (context, session, child) {
+                  return Text(session.accesoSesion);
+                },
+              ),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -99,7 +108,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              ScannerPage(matricula: widget.matricula, acceso: widget.acceso),
+              ScannerPage(),
         ));
   }
 
@@ -108,7 +117,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              RegistrarUsuarioPage(matricula: widget.matricula, acceso: widget.acceso),
+              RegistrarUsuarioPage(),
         ));
   }
 
@@ -117,7 +126,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              RegistrarAlumnoPage(matricula: widget.matricula, acceso: widget.acceso),
+              RegistrarAlumnoPage(),
         ));
   }
 }

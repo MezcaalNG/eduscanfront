@@ -1,18 +1,19 @@
+import 'package:eduscan/api/models/registrar_alumno_request_model.dart';
 import 'package:eduscan/pages/registrar_alumno_page.dart';
 import 'package:eduscan/pages/registrar_usuario_page.dart';
 import 'package:eduscan/pages/scanner_page.dart';
 import 'package:flutter/material.dart';
 
-class MainMenuPage extends StatefulWidget {
-  static String id = 'main_menu_page';
-  final String matricula, acceso;
-  const MainMenuPage({Key? key, required this.matricula, required this.acceso})
+class StudentDataPage extends StatefulWidget {
+  static String id = 'student_data_page';
+  final RegistrarAlumnoRequest requestAlumno;
+  const StudentDataPage({Key? key, required this.requestAlumno})
       : super(key: key);
   @override
-  State<MainMenuPage> createState() => _MainMenuPageState();
+  State<StudentDataPage> createState() => _StudentDataPageState();
 }
 
-class _MainMenuPageState extends State<MainMenuPage> {
+class _StudentDataPageState extends State<StudentDataPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -62,7 +63,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
           children: [
             ListTile(
               title: const Text('Matricula:'),
-              subtitle: Text(widget.matricula),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.account_circle,
                 color: Colors.blue[500],
@@ -71,7 +72,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Nombre'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -80,7 +81,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Apellido Paterno'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -89,7 +90,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Apellido Materno'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -98,7 +99,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Estatus'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -107,7 +108,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Direccion'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -116,7 +117,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Nacimiento'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -125,7 +126,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Correo Institucional'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -134,7 +135,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Correo Personal'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -143,7 +144,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Celular'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -152,7 +153,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Numero de Seguridad Social'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -161,7 +162,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Tipo de Sangre'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -170,7 +171,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Grupo'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -179,7 +180,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Carrera'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -188,7 +189,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
             //const Divider(),
             ListTile(
               title: const Text('Cuatrimestre'),
-              subtitle: Text(widget.acceso),
+              subtitle: Text(""),
               leading: Icon(
                 Icons.access_time,
                 color: Colors.blue[500],
@@ -205,7 +206,7 @@ class _MainMenuPageState extends State<MainMenuPage> {
         context,
         MaterialPageRoute(
           builder: (context) =>
-              RegistrarAlumnoPage(matricula: widget.matricula, acceso: widget.acceso),
+              const RegistrarAlumnoPage(),
         ));
   }
 }
