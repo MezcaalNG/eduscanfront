@@ -22,11 +22,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'EDUSCAN',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.teal,
+        scaffoldBackgroundColor: const Color(0xFF012D5A),
       ),
       initialRoute: LoginPage.id,
       routes: {

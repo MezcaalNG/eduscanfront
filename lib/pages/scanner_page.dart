@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:scan/scan.dart';
 
 import '../api/api_service.dart';
+import '../api/models/consultar_alumno_request_model.dart';
 
 class ScannerPage extends StatefulWidget {
   static String id = 'scanner_page';
@@ -50,7 +51,7 @@ class _ScannerPagePageState extends State<ScannerPage> {
             scanAreaScale: .7,
             scanLineColor: Colors.green.shade400,
             onCapture: (data) {
-              _showDialogUnkownUser(data);
+              _doConsulta(data);
             },
           ),
         );
@@ -94,16 +95,16 @@ class _ScannerPagePageState extends State<ScannerPage> {
   }
 
   void _doConsulta(String matricula) async {
-    RegistrarAlumnoRequest responseConsulta = (await ApiService().postConsultaAlumno(matricula))!;
+    ConsultarAlumnoResponse responseConsulta = (await ApiService().postConsultaAlumno(matricula))!;
     //Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
     if (responseConsulta.matricula.isEmpty) {
-      //_showDialogUnkownUser();
+      _showDialogUnkownUser(matricula);
     } else {
       _navigate(responseConsulta);
     }
   }
 
-  void _navigate(RegistrarAlumnoRequest requestAlumno) {
+  void _navigate(ConsultarAlumnoResponse requestAlumno) {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

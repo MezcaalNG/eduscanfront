@@ -1,5 +1,6 @@
 import 'package:eduscan/api/models/session_model.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../api/api_service.dart';
 import '../api/models/login_response_model.dart';
@@ -57,9 +58,19 @@ class _LoginPageState extends State<LoginPage> {
           child: TextField(
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
-              icon: Icon(Icons.email),
+              icon: Icon(
+                Icons.email,
+                color: Colors.white,
+              ),
               hintText: 'ejemplo@correo.com',
-              labelText: 'Correo Electronico',
+              labelText: 'CORREO ELECTRONICO',
+              hintStyle: TextStyle(color: Colors.white, letterSpacing: .5),
+              labelStyle: TextStyle(color: Colors.white, letterSpacing: .5),
+              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))
+            ),
+            style: GoogleFonts.lato(
+              textStyle:
+                  const TextStyle(color: Colors.white, letterSpacing: .5),
             ),
             controller: emailController,
             onChanged: (value) {},
@@ -78,9 +89,19 @@ class _LoginPageState extends State<LoginPage> {
             keyboardType: TextInputType.text,
             obscureText: true,
             decoration: const InputDecoration(
-              icon: Icon(Icons.password),
-              hintText: 'Contraseña',
-              labelText: 'Contraseña',
+              icon: Icon(
+                Icons.password,
+                color: Colors.white,
+              ),
+              hintText: 'CONTRASEÑA',
+              labelText: 'CONTRASEÑA',
+              hintStyle: TextStyle(color: Colors.white, letterSpacing: .5),
+              labelStyle: TextStyle(color: Colors.white, letterSpacing: .5),
+              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))
+            ),
+            style: GoogleFonts.lato(
+              textStyle:
+                  const TextStyle(color: Colors.white, letterSpacing: .5),
             ),
             controller: pswdController,
             onChanged: (value) {},
@@ -93,32 +114,35 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buttonLogin() {
     return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return ElevatedButton(
+      return ElevatedButton.icon(
           onPressed: () {
             setState(() {
               _doLogin(emailController.text, pswdController.text);
             });
           },
+          icon: const Icon(Icons.login),
           style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25),
+                borderRadius: BorderRadius.circular(10),
               ),
+              backgroundColor: const Color(0xFF8CC63F),
+              foregroundColor: const Color(0xFF002E5D),
               elevation: 10.0),
-          child: Container(
+          label: Container(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-              child: const Text('Iniciar Sesion')));
+                  const EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
+              child: const Text('INICIAR SESION')));
     });
   }
 
   void _doLogin(String email, String pswd) async {
     var session = context.read<SessionModel>();
     LoginResponse loginResponse = (await ApiService().postLogin(email, pswd))!;
-    //Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
     if (loginResponse.mensaje == "NOK") {
       _showDialogUnkownUser();
     } else {
-      session.set(loginResponse.matricula, loginResponse.acceso);
+      session.set(
+          loginResponse.matricula, loginResponse.acceso, loginResponse.nivel);
       _navigate();
     }
   }
@@ -127,8 +151,7 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              const MainMenuPage(),
+          builder: (context) => const MainMenuPage(),
         ),
         (e) => false);
   }
@@ -139,18 +162,18 @@ class _LoginPageState extends State<LoginPage> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Error'),
+          title: const Text('UPS!!'),
           content: SingleChildScrollView(
             child: ListBody(
               children: const <Widget>[
-                Text('Error al iniciar sesion'),
-                Text('Favor de verificar usuario y contraseña'),
+                Text('HA OCURRIDO UN ERROR AL INICIAR SESION'),
+                Text('POR FAVOR VERIFICA TU USUARIO Y CONTRASEÑA'),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Aceptar'),
+              child: const Text('ACEPTAR'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
