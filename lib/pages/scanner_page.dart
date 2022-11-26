@@ -1,11 +1,15 @@
+import 'package:eduscan/api/models/registrar_alumno_request_model.dart';
 import 'package:eduscan/pages/main_menu_page.dart';
+import 'package:eduscan/pages/student_data_page.dart';
 import 'package:flutter/material.dart';
 import 'package:scan/scan.dart';
 
+import '../api/api_service.dart';
+import '../api/models/consultar_alumno_request_model.dart';
+
 class ScannerPage extends StatefulWidget {
   static String id = 'scanner_page';
-  final String matricula, acceso;
-  const ScannerPage({Key? key, required this.matricula, required this.acceso})
+  const ScannerPage({Key? key})
       : super(key: key);
   @override
   State<ScannerPage> createState() => _ScannerPagePageState();
@@ -47,7 +51,7 @@ class _ScannerPagePageState extends State<ScannerPage> {
             scanAreaScale: .7,
             scanLineColor: Colors.green.shade400,
             onCapture: (data) {
-              _showDialogUnkownUser(data);
+              _doConsulta(data);
             },
           ),
         );
@@ -79,8 +83,7 @@ class _ScannerPagePageState extends State<ScannerPage> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MainMenuPage(
-                          matricula: widget.matricula, acceso: widget.acceso),
+                      builder: (context) => const MainMenuPage(),
                     ),
                     (e) => false);
               },
@@ -89,5 +92,25 @@ class _ScannerPagePageState extends State<ScannerPage> {
         );
       },
     );
+  }
+
+  void _doConsulta(String matricula) async {
+    ConsultarAlumnoResponse responseConsulta = (await ApiService().postConsultaAlumno(matricula))!;
+    //Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    if (responseConsulta.matricula.isEmpty) {
+      _showDialogUnkownUser(matricula);
+    } else {
+      _navigate(responseConsulta);
+    }
+  }
+
+  void _navigate(ConsultarAlumnoResponse requestAlumno) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+          StudentDataPage(requestAlumno: requestAlumno),
+        ),
+            (e) => false);
   }
 }

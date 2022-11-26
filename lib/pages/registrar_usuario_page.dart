@@ -6,8 +6,7 @@ import 'main_menu_page.dart';
 
 class RegistrarUsuarioPage extends StatefulWidget {
   static String id = 'registrar_usuario_page';
-  final String matricula, acceso;
-  const RegistrarUsuarioPage({Key? key, required this.matricula, required this.acceso}) : super(key: key);
+  const RegistrarUsuarioPage({Key? key}) : super(key: key);
   @override
   State<RegistrarUsuarioPage> createState() => _RegistrarUsuarioPageState();
 }
@@ -103,18 +102,22 @@ class _RegistrarUsuarioPageState extends State<RegistrarUsuarioPage> {
   Widget _buttonRegistrar() {
     return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return ElevatedButton(
+          return ElevatedButton.icon(
               onPressed: () {
                 _doRegistrar();
               },
+              icon: const Icon(Icons.save),
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  elevation: 10.0),
-              child: Container(
+                  elevation: 10.0,
+                backgroundColor: const Color(0xFF8CC63F),
+                foregroundColor: const Color(0xFF002E5D),
+              ),
+              label: Container(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+                  const EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
                   child: const Text('Registrar')));
         });
   }
@@ -192,8 +195,7 @@ class _RegistrarUsuarioPageState extends State<RegistrarUsuarioPage> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MainMenuPage(
-                          matricula: widget.matricula, acceso: widget.acceso),
+                      builder: (context) => const MainMenuPage(),
                     ),
                         (e) => false);
               },

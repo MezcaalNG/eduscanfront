@@ -4,6 +4,7 @@ import 'package:eduscan/api/models/login_response_model.dart';
 import 'package:eduscan/api/models/registrar_alumno_request_model.dart';
 import 'package:http/http.dart' as http;
 import 'constants.dart';
+import 'models/consultar_alumno_request_model.dart';
 import 'models/registrar_alumno_response_model.dart';
 import 'models/registrar_usuario_response_model.dart';
 
@@ -91,4 +92,24 @@ class ApiService {
     return null;
   }
 
+  Future<ConsultarAlumnoResponse?> postConsultaAlumno(String matricula) async {
+    try {
+      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.consultarAlumnoEndPoint);
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'matricula': matricula
+          })
+      );
+      if (response.statusCode == 200) {
+        ConsultarAlumnoResponse responseConsulta = consultarAlumnoResponseFromJson(response.body);
+        return responseConsulta;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
 }

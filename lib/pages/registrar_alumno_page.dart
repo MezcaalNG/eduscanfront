@@ -9,8 +9,7 @@ import 'main_menu_page.dart';
 
 class RegistrarAlumnoPage extends StatefulWidget {
   static String id = 'registrar_alumno_page';
-  final String matricula, acceso;
-  const RegistrarAlumnoPage({Key? key, required this.matricula, required this.acceso}) : super(key: key);
+  const RegistrarAlumnoPage({Key? key}) : super(key: key);
   @override
   State<RegistrarAlumnoPage> createState() => _RegistrarAlumnoPageState();
 }
@@ -138,18 +137,22 @@ class _RegistrarAlumnoPageState extends State<RegistrarAlumnoPage> {
   Widget _buttonRegistrar() {
     return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return ElevatedButton(
+          return ElevatedButton.icon(
               onPressed: () {
                 _doRegistrar();
               },
+              icon: const Icon(Icons.save),
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  elevation: 10.0),
-              child: Container(
+                  elevation: 10.0,
+                backgroundColor: const Color(0xFF8CC63F),
+                foregroundColor: const Color(0xFF002E5D),
+              ),
+              label: Container(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+                  const EdgeInsets.symmetric(horizontal: 60.0, vertical: 15.0),
                   child: const Text('Registrar')));
         });
   }
@@ -265,8 +268,7 @@ class _RegistrarAlumnoPageState extends State<RegistrarAlumnoPage> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => QrPreviewPage(
-                          matricula: widget.matricula, acceso: widget.acceso, matriculaAlumno: matriculaAlumno,),
+                      builder: (context) => QrPreviewPage(matriculaAlumno: matriculaAlumno,),
                     ),
                         (e) => false);
               },
